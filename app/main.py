@@ -12,8 +12,8 @@ import requests
 import time
 
 # Internal Url for MAVLink2REST API
-# url = "http://172.18.0.1:6040/mavlink"
-url = "http://blueos.local/mavlink2rest"
+url = "http://172.18.0.1:6040/mavlink"
+# url = "http://blueos.local/mavlink2rest"
 
 SERVICE_NAME = "GPIO Control"
 
@@ -51,7 +51,7 @@ def get_humid():
     except Exception as e:
         logger.info(f"Error reading sensor: {e}")
     
-# Find the device folder (starts with 28-)
+# Find the device folder for ds18b20 (starts with 28-)
 base_dir = '/sys/bus/w1/devices/'
 device_folders = glob.glob(base_dir + '28*')
 if not device_folders:
@@ -79,17 +79,7 @@ def get_temp():
     
     return "ok"
 
-
-temp1_array = ["\0"] * 10
-temp1 = "Temp1"
-for i, char in enumerate(temp1[:10]):
-    temp1_array[i] = char
-
-humid_array = ["\0"] * 10
-humid = "Humid"
-for i, char in enumerate(humid[:10]):
-    humid_array[i] = char
-
+# Check sensor values and post them every 2 seconds
 if __name__ == "__main__":
     while True:
         current_temp = get_temp()
