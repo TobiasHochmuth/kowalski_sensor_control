@@ -1,0 +1,16 @@
+# Handle line endings automatically for files detected as text 
+# and force them to LF on check-in
+* text=auto eol=lf
+
+# Explicitly declare text files you want to always be LF
+*.js text eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+
+# Denote files that might contain binary data as binary 
+# (Git won't touch line endings in these)
+*.png binary
+*.jpg binary
