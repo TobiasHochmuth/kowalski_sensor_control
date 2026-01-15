@@ -1,11 +1,13 @@
 FROM python:3.9-slim-bullseye
 
-COPY install.sh /install.sh
+WORKDIR /app
 
-RUN /install.sh
+COPY install.sh .
 
-COPY app /app
-RUN python /app/setup.py install
+RUN chmod +x install.sh && ./install.sh
+
+COPY app .
+RUN python setup.py install
 
 EXPOSE 80/tcp
 
@@ -20,7 +22,7 @@ LABEL permissions='\
     "Privileged": true,\
     "Binds":[\
       "/root/.config:/root/.config",\
-      "/dev:/dev"\
+      "/dev:/dev",\
       "/sys:/sys"\
     ],\
     "ExtraHosts": ["host.docker.internal:host-gateway"],\
@@ -51,11 +53,11 @@ LABEL type="gpiocontrol"
 LABEL tags='[\
         "sensor-reading"\
     ]'
-LABEL readme='https://raw.githubusercontent.com/Williangalvani/BlueOS-examples/{tag}/example5-gpio-control/Readme.md'
+LABEL readme='https://github.com/TobiasHochmuth/kowalski_sensor_control/blob/main/Readme.md'
 LABEL links='{\
-        "website": "https://github.com/Williangalvani/BlueOS-examples/",\
-        "support": "https://github.com/Williangalvani/BlueOS-examples/"\
+        "website": "https://github.com/TobiasHochmuth/kowalski_sensor_control",\
+        "support": "https://github.com/TobiasHochmuth/kowalski_sensor_control"\
     }'
 LABEL requirements="core >= 1.4"
 
-ENTRYPOINT cd /app && python main.py
+ENTRYPOINT ["python", "main.py"]
