@@ -16,5 +16,7 @@ setup(
     license="MIT",
     install_requires=[
         "loguru == 0.5.3",
+        "flask",
+        "flask-cors",
     ],
 )

@@ -11,6 +11,8 @@ import requests
 
 import time
 
+from flask import Flask, jsonify
+
 # Internal Url for MAVLink2REST API
 url = "http://172.18.0.1:6040/mavlink"
 # url = "http://blueos.local/mavlink2rest"
@@ -77,16 +79,10 @@ def get_temp():
         logger.info(f"Reading temperature failed {e}")
         return f"Error: {e}"
     
-    return "ok"
+    return "Couldn't find device folder (DS18B20)"
 
-# Check sensor values and post them every 2 seconds
-if __name__ == "__main__":
-    while True:
-        current_temp = get_temp()
-
-        current_humid = get_humid()
-
-        payload_temp = {
+def post_temp_value(current_temp):
+    payload_temp = {
             "header": {
                 "system_id": 1,
                 "component_id": 100,
@@ -100,6 +96,12 @@ if __name__ == "__main__":
             }
         }
 
+        logger.info(f"Temp: {current_temp}")
+
+        response_temp = requests.post(url, json=payload_temp)
+        logger.info(f"Response temp: {response_temp}")
+
+def post_humid_value(current_humid):
         payload_humid = {
             "header": {
                 "system_id": 1,
@@ -113,14 +115,38 @@ if __name__ == "__main__":
                 "name": "humid"
             }
         }
-        logger.info(f"Temp: {current_temp}")
         
         logger.info(f"Humidity: {current_humid}")
-        
-            
-        response_temp = requests.post(url, json=payload_temp)
-        logger.info(f"Response temp: {response_temp}")
 
         response_humid = requests.post(url, json=payload_humid)
         logger.info(f"Response humid: {response_humid}")
+
+app = Flask(__name__)
+
+@app.route('/sensors/temperature', methods=['GET'])
+def read_temperature():
+    temp = get_temp()
+    post_temp_value(temp)
+    return jsonify({"temperature": temp})
+
+@app.route('/sensors/humidity', methods=['GET'])
+def read_humidity():
+    humid = get_humid()
+    post_humid_value(humid) # post the humidity value to the blueOS backend to ensure we have the most recent value
+    return jsonify({"humidity": humid})
+
+
+# Check sensor values and post them every 2 seconds
+if __name__ == "__main__":
+
+    #0.0 is local host. Where the backend api waits and where the frontend send requests to get the data
+    app.run(host='0.0.0.0', port=5000)
+
+    while True:
+        current_temp = get_temp()
+
+        current_humid = get_humid()
+
+        post_sensor_values(current_temp, current_humid)
+        
         time.sleep(2)

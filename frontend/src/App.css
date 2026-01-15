@@ -1,0 +1,80 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Screen container - full viewport */
+.screen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+/* Screen - 60% of available space, centered */
+.screen {
+  width: 60%;
+  max-width: 90%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+/* Sensor box - groups title, value, and refresh button */
+.sensor-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.title-text {
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+}
+
+.value-box {
+  width: 100px;
+  height: 50px;
+  padding: 0;              /* <-- no padding */
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.refresh-button {
+  padding: 0;              /* optional: since you have fixed size */
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 4px;
+}
+
+.refresh-button:hover {
+  background-color: #004b9c;
+}
