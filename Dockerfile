@@ -1,11 +1,13 @@
 FROM python:3.9-slim-bullseye
 
-COPY install.sh /install.sh
+WORKDIR /app
 
-RUN /install.sh
+COPY install.sh .
 
-COPY app /app
-RUN python /app/setup.py install
+RUN chmod +x install.sh && ./install.sh
+
+COPY app .
+RUN python setup.py install
 
 EXPOSE 80/tcp
 
@@ -20,7 +22,7 @@ LABEL permissions='\
     "Privileged": true,\
     "Binds":[\
       "/root/.config:/root/.config",\
-      "/dev:/dev"\
+      "/dev:/dev",\
       "/sys:/sys"\
     ],\
     "ExtraHosts": ["host.docker.internal:host-gateway"],\
@@ -58,4 +60,4 @@ LABEL links='{\
     }'
 LABEL requirements="core >= 1.4"
 
-ENTRYPOINT cd /app && python main.py
+ENTRYPOINT ["python", "main.py"]
