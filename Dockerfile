@@ -1,13 +1,11 @@
 FROM python:3.9-slim-bullseye
 
-WORKDIR /app
+COPY install.sh /install.sh
 
-COPY install.sh .
+RUN /install.sh
 
-RUN chmod +x install.sh && ./install.sh
-
-COPY app .
-RUN python setup.py install
+COPY app /app
+RUN python /app/setup.py install
 
 EXPOSE 80/tcp
 
@@ -60,4 +58,4 @@ LABEL links='{\
     }'
 LABEL requirements="core >= 1.4"
 
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT cd /app && python main.py
