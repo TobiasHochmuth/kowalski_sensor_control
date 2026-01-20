@@ -51,10 +51,10 @@ LABEL type="gpiocontrol"
 LABEL tags='[\
         "sensor-reading"\
     ]'
-LABEL readme='https://raw.githubusercontent.com/Williangalvani/BlueOS-examples/{tag}/example5-gpio-control/Readme.md'
+LABEL readme='https://github.com/TobiasHochmuth/kowalski_sensor_control/blob/main/Readme.md'
 LABEL links='{\
-        "website": "https://github.com/Williangalvani/BlueOS-examples/",\
-        "support": "https://github.com/Williangalvani/BlueOS-examples/"\
+        "website": "https://github.com/TobiasHochmuth/kowalski_sensor_control",\
+        "support": "https://github.com/TobiasHochmuth/kowalski_sensor_control"\
     }'
 LABEL requirements="core >= 1.4"
 
