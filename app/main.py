@@ -163,10 +163,7 @@ if __name__ == "__main__":
         #         "value": current_temp
         #     }
         # }
-        try:
-            current_leak1 = float(current_leak1)
-        except Exception:
-            current_leak = 0.0
+
         # payload_humid = {
         #     "header": {
         #         "system_id": 255,

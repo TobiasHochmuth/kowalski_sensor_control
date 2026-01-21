@@ -20,9 +20,10 @@ Then pull it in blueos (or load it as an extension on blueos using their UI insi
 ```
 red-pill
 sudo docker run -d --net=host --name=gpiocontrol --restart=unless-stopped tobiashochmuth/sensors:general
-```docker stop buildx_buildkit_multiarch0
+```
 
 (It may be necessary during development to restart the builder due to failing to download libraries. Run this command in that case:)
+
 ```
 docker stop buildx_buildkit_multiarch0
 ```
